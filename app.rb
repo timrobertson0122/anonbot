@@ -7,11 +7,12 @@ get '/anonymize' do
   status 200
 end
 
-def postback(message, _channel)
+# get '/anonymize' do
+#   content_type :json
+#   {:text => params[:text], :response_type => "in_channel"}.to_json
+# end
+
+def postback(message, channel)
   slack_webhook = ENV['SLACK_WEBHOOK_URL']
-  HTTPARTY.post slack_webhook, body: {
-    'text' => message.to_s,
-    'username' => 'John Doe',
-    'channel' => params[:channel_id]
-  }.to_json, headers: { 'content-type' => 'application/json' }
+  HTTParty.post slack_webhook, body: { 'text' => message.to_s, 'username' => 'John Doe', 'channel' => params[:channel_id]}.to_json, headers: { 'content-type' => 'application/json' }
 end
